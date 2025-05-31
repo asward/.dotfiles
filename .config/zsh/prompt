@@ -1,0 +1,67 @@
+# Load version control info
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:git:*' formats '%F{green}(%b)%f'
+zstyle ':vcs_info:git:*' actionformats '%F{green}(%b|%a)%f'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '%F{yellow}'
+zstyle ':vcs_info:git:*' unstagedstr '%F{yellow}'
+
+# Function to check if git repo is dirty
+function git_dirty() {
+  [[ $(git status --porcelain 2>/dev/null) != "" ]] && echo "%F{yellow}" || echo "%F{green}"
+}
+
+# Helper function to get branch name
+function git_branch() {
+  git branch 2>/dev/null | sed -n '/\* /s/\* //p'
+}
+
+# Custom path function that shows at most 3 levels but indicates truncation
+function custom_path() {
+  local pwd_length=${#PWD}
+  local home_length=${#HOME}
+
+  # Replace $HOME with ~
+  if [[ $PWD == $HOME* ]]; then
+    local rel_path="~${PWD:$home_length}"
+  else
+    local rel_path=$PWD
+  fi
+
+  # Split the path
+  local IFS=/
+  local -a path_components=(${=rel_path})
+
+  # If there are more than 3 components (excluding empty first one), show truncation
+  if (( ${#path_components[@]} > 4 )); then
+    echo "../${path_components[-3]}/${path_components[-2]}/${path_components[-1]}"
+  else
+    echo "$rel_path"
+  fi
+}
+
+# Configure colors and styles
+precmd() {
+  vcs_info
+  if [[ -n ${vcs_info_msg_0_} ]]; then
+    # If in a VCS directory, more carefully handle the substitution
+    VCS_STATUS="$(git_dirty)($(git_branch))%f"
+  else
+    # Not in a VCS directory
+    VCS_STATUS=""
+  fi
+
+  # Set the custom path
+  CUSTOM_PATH=$(custom_path)
+}
+
+# Set prompt
+setopt PROMPT_SUBST
+PROMPT='%F{cyan}%m%f %F{blue}${CUSTOM_PATH}%f ${VCS_STATUS} %F{white}>%f '
+RPROMPT='%F{magenta}%D{%Y-%m-%d %H:%M:%S}%f'
+
+# Export the variables
+export PROMPT
+export RPROMPT
+

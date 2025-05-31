@@ -1,0 +1,11 @@
+{
+  "rust-analyzer.enable": true,
+  "rust-analyzer.server.path": "/home/warda/.cargo/bin/rust-analyzer",
+  "languageserver": {
+    "rust-analyzer": {
+      "command": "/home/warda/.cargo/bin/rust-analyzer",
+      "filetypes": ["rust"],
+      "rootPatterns": ["Cargo.toml"]
+    }
+  }
+}
