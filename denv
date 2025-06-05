@@ -1,0 +1,192 @@
+#!/bin/sh
+# Denv - Docker Environment Management Script
+
+# Configuration file location
+CONFIG_FILE="${HOME}/.config/denv/config"
+
+# Default configuration (fallback if config file is missing)
+DEFAULT_CONTAINERS_DIR=".containers"
+DEFAULT_ENV="dev"
+DEFAULT_SHELL="/bin/sh"
+DEFAULT_HOST_USER="$(id -un)"
+
+# Function to read config value
+read_config() {
+    local key="$1"
+    local default="$2"
+    
+    # Check if config file exists
+    if [ ! -f "$CONFIG_FILE" ]; then
+        echo "$default"
+        return
+    fi
+    
+    # Read value from config file, use default if not found
+    VALUE=$(grep "^${key}=" "$CONFIG_FILE" | cut -d'=' -f2-)
+    
+    # If value is empty, use default
+    if [ -z "$VALUE" ]; then
+        echo "$default"
+    else
+        echo "$VALUE"
+    fi
+}
+
+# Read configuration values
+CONTAINERS_DIR=$(read_config "containers_dir" "$DEFAULT_CONTAINERS_DIR")
+ENV=$(read_config "default_env" "$DEFAULT_ENV")
+SHELL=$(read_config "default_shell" "$DEFAULT_SHELL")
+HOST_USER=$(read_config "default_user" "$DEFAULT_HOST_USER")
+
+# Function to print usage information
+print_usage() {
+    echo "Usage: $0 <action> [options]"
+    echo "Actions:"
+    echo "  up      [-e|--env ENV]      Start docker compose services"
+    echo "  down    [-e|--env ENV]      Stop docker compose services"
+    echo "  clean   [-e|--env ENV]      Stop and remove containers and images"
+    echo "  attach  [-e|--env ENV]      Attach to a running service"
+    echo "             [-s|--service SERVICE]"
+    exit 1
+}
+
+# Function to connect to a container
+connect_as_user() {
+    local container="$1"
+    local shell="${2:-$SHELL}"
+    
+    echo "Connecting to $container as $HOST_USER with $shell"
+    docker exec -it --user "$HOST_USER" "$container" "$shell"
+}
+
+# Parse arguments
+ACTION=""
+OVERRIDE_ENV=""
+SERVICE=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        up|down|clean|attach)
+            ACTION="$1"
+            shift
+            ;;
+        -e|--env)
+            shift
+            OVERRIDE_ENV="$1"
+            shift
+            ;;
+        -s|--service)
+            shift
+            SERVICE="$1"
+            shift
+            ;;
+        *)
+            print_usage
+            ;;
+    esac
+done
+
+# Determine which environment to use
+ACTIVE_ENV="${OVERRIDE_ENV:-$ENV}"
+
+# Validate action
+if [ -z "$ACTION" ]; then
+    print_usage
+fi
+
+# Construct path to docker compose file
+COMPOSE_PATH="${CONTAINERS_DIR}/${ACTIVE_ENV}/docker-compose.yml"
+ALTERNATE_COMPOSE_PATH="${CONTAINERS_DIR}/${ACTIVE_ENV}/docker-compose.yaml"
+
+# Check if docker compose file exists
+if [ ! -f "$COMPOSE_PATH" ] && [ ! -f "$ALTERNATE_COMPOSE_PATH" ]; then
+    echo "Error: No docker-compose file found in ${CONTAINERS_DIR}/${ACTIVE_ENV}/"
+    exit 1
+fi
+
+# Use the first found compose file
+if [ -f "$COMPOSE_PATH" ]; then
+    SELECTED_COMPOSE_PATH="$COMPOSE_PATH"
+else
+    SELECTED_COMPOSE_PATH="$ALTERNATE_COMPOSE_PATH"
+fi
+
+# Find the first service in the compose file if not specified
+if [ -z "$SERVICE" ]; then
+    SERVICE=$(docker compose -f "$SELECTED_COMPOSE_PATH" config --services | head -n 1)
+fi
+
+if [ -z "$SERVICE" ]; then
+    echo "Error: No services found in docker-compose file"
+    exit 1
+fi
+
+# Perform the requested action
+case "$ACTION" in
+    up)
+        # Check if service is already running
+        if docker compose -f "$SELECTED_COMPOSE_PATH" ps | grep -q "$SERVICE"; then
+            echo "Service $SERVICE is already running"
+            exit 0
+        fi
+
+        # Start the service
+        echo "Starting service $SERVICE in environment $ACTIVE_ENV"
+        docker compose -f "$SELECTED_COMPOSE_PATH" up -d "$SERVICE"
+        ;;
+    
+    down)
+        # Stop the service
+        echo "Stopping service $SERVICE in environment $ACTIVE_ENV"
+        docker compose -f "$SELECTED_COMPOSE_PATH" down "$SERVICE"
+        ;;
+    
+    clean)
+        # Stop and remove containers, images, and networks
+        echo "Cleaning service $SERVICE in environment $ACTIVE_ENV"
+        
+        # Stop and remove containers and volumes
+        docker compose -f "$SELECTED_COMPOSE_PATH" down -v "$SERVICE"
+        
+        # Extract project name using basic shell parsing
+        PROJECT_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
+        
+        # Remove images associated with the service
+        IMAGES_TO_REMOVE=$(docker compose -f "$SELECTED_COMPOSE_PATH" config | \
+            grep "image:" | awk '{print $2}')
+        
+        for image in $IMAGES_TO_REMOVE; do
+            echo "Removing image: $image"
+            docker rmi "$image" 2>/dev/null || true
+        done
+        
+        # Remove any dangling images related to the project
+        DANGLING_IMAGES=$(docker images -f "label=com.docker.compose.project=$PROJECT_NAME" -q)
+        
+        if [ -n "$DANGLING_IMAGES" ]; then
+            echo "Removing dangling project images"
+            echo "$DANGLING_IMAGES" | xargs -r docker rmi 2>/dev/null || true
+        fi
+        
+        echo "Cleanup complete for $SERVICE in $ACTIVE_ENV"
+        ;;
+    
+    attach)
+        # Ensure service is up
+        if ! docker compose -f "$SELECTED_COMPOSE_PATH" ps | grep -q "$SERVICE"; then
+            echo "Service $SERVICE not running. Starting it first..."
+            docker compose -f "$SELECTED_COMPOSE_PATH" up -d "$SERVICE"
+        fi
+
+        # Find the container ID for the service
+        CONTAINER_ID=$(docker compose -f "$SELECTED_COMPOSE_PATH" ps -q "$SERVICE")
+        
+        if [ -z "$CONTAINER_ID" ]; then
+            echo "Error: Could not find container for service '$SERVICE'"
+            exit 1
+        fi
+
+        # Connect to the container
+        connect_as_user "$CONTAINER_ID"
+        ;;
+esac
