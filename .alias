@@ -1,4 +1,4 @@
-##/bin/sh 
+#!/bin/sh 
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -8,3 +8,20 @@ alias egrep='egrep --color=auto'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -lsa'
+
+
+# WSL Clipboard Detection and Alias Setup
+if [[ -n "$WSL_DISTRO_NAME" ]] || grep -qi microsoft /proc/version 2>/dev/null; then
+    # Set clipboard aliases for WSL
+    alias clip='powershell.exe "Get-Clipboard"'
+    alias clipset='powershell.exe "Set-Clipboard"'
+    
+    # Optional: Additional clipboard functions
+    clipget() {
+        powershell.exe "Get-Clipboard" "$@"
+    }
+    
+    clipput() {
+        powershell.exe "Set-Clipboard" -Value "$(cat)"
+    }
+fi
