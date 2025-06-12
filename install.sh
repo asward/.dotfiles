@@ -5,14 +5,14 @@
 
 show_help() {
     cat << 'EOF'
-Symlink Manager - Creates symlinks from source directory to various locations
+Symlink Manager - Installs from source directory to various locations
 
 USAGE:
-    ./symlink.sh [config_file]
-    ./symlink.sh -h|--help
+    ./install.sh [config_file]
+    ./install.sh -h|--help
 
 ARGUMENTS:
-    config_file    Configuration file (default: symlinks.conf)
+    config_file    Configuration file (default: unix.conf)
 
 CONFIG FILE FORMAT:
     source_file:destination_path
