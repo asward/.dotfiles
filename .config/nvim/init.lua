@@ -14,6 +14,7 @@ vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2a2a2a', blend = 20 })
 
 -- Buffer shortcuts
 vim.keymap.set('n', '<C-s>', ':w <CR>')
+
 -- Buffer tab/close
 vim.keymap.set('n', '<leader>n', '<Cmd>bn!<CR>')
 vim.keymap.set('n', '<leader>p', '<Cmd>bp!<CR>')
@@ -24,3 +25,5 @@ vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 
 -- PYTHON
 vim.g.python3_host_prog = "/usr/local/bin/python"
+
+vim.opt.clipboard = "unnamedplus"

@@ -2,6 +2,13 @@ local builtin = require('telescope.builtin')
 local log_viewer = require('telescope-log-viewer')
 
 
+-- Configure Telescope to always open in normal mode
+require('telescope').setup({
+  defaults = {
+    initial_mode = "normal",
+  },
+})
+
 --vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>ff', function()
   require("telescope.builtin").find_files({ hidden = true })
