@@ -1,0 +1,2 @@
+
+return {'asward/scholar.nvim'}
