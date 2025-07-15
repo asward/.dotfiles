@@ -40,6 +40,10 @@ if [ -f "$HOME/.alias" ]; then
     source $HOME/.alias
 fi
 
+if [ -f "$HOME/.secrets/api.env" ]; then
+    set -a; source $HOME/.secrets/api.env; set +a;
+fi
+
 fpath=($HOME/.config/zsh $fpath)
 autoload -Uz prompt; prompt
 
