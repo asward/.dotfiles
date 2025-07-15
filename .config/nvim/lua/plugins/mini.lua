@@ -12,6 +12,7 @@ return {
 	require('mini.animate').setup()
 	--require('mini.tabline').setup()
 	--require('mini.statusline').setup()
+	require('mini.diff').setup()
   	
 
 	--vim.keymap.set('n', '<Leader>mc', MiniMap.close)
