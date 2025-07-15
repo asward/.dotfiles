@@ -2,6 +2,9 @@ local M = {
   "neoclide/coc.nvim",
   branch = "master",
   build = "npm ci",
+  dependencies = {
+    "olimorris/codecompanion.nvim"
+  },
 }
 
 M.config = function()
