@@ -1,25 +1,35 @@
 vim.opt.termguicolors = true
-require("config.lazy")
 vim.cmd.colorscheme('habamax')
+
+require("config.lazy")
+
 -- Hybrid line numbers
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg = 'white', bg = 'NONE' })
 vim.opt.number = true
 vim.opt.updatetime = 250
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- No sign column - diagnostics will color the line numbers directly
 vim.opt.signcolumn = 'no'
 vim.opt.list = true
 vim.opt.listchars = {
   eol = "↴",
-  tab = "│⋅",
-  trail = "•",
-  extends = "❯",
-  precedes = "❮",
+  --  tab = "│⋅",
+  --  trail = "•",
+  --  extends = "❯",
+  --  precedes = "❮",
 }
+
 -- Base line number colors
 vim.api.nvim_set_hl(0, 'LineNr', { fg = '#6272a4' })                    -- Relative numbers
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ff79c6', bold = true }) -- Current line
+
+
+-- vim.api.nvim_set_hl(0, "@ilb.scope.char.1", { fg = "#d3869b" })
+-- vim.api.nvim_set_hl(0, "@ilb.scope.underline.1", { fg = "#d3869b", underline = true })
+
+vim.api.nvim_set_hl(0, 'IblScope', { fg = '#ff6c6b', bold = true })
+
 
 -- Diagnostic line number colors (no background)
 vim.api.nvim_set_hl(0, 'DiagnosticLineNrError', { fg = '#ff6c6b', bold = true })
