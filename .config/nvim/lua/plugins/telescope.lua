@@ -11,13 +11,28 @@ local function find_files_with_path_regex()
 	})
 end
 
+local function buffer_finder_with_delete()
+	require('telescope.builtin').buffers({
+		attach_mappings = function(prompt_bufnr, map)
+			map('n', 'x', function()
+				local selection = require('telescope.actions.state').get_selected_entry()
+				if selection then
+					vim.api.nvim_buf_delete(selection.bufnr, { force = false })
+					require('telescope.actions').delete_buffer(prompt_bufnr)
+				end
+			end)
+			return true
+		end,
+	})
+end
+
 -- Global keybindings to trigger telescope
 vim.keymap.set('n', '<leader>ff', function()
-	require("telescope.builtin").find_files({ hidden = true })
+	require("telescope.builtin").find_files({ hidden = true, initial_mode = "insert" })
 end, { desc = 'Telescope find files (include hidden)' })
 
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fb', buffer_finder_with_delete, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Telescope help tags' })
 vim.keymap.set('n', '<leader>fp', find_files_with_path_regex, { desc = 'Find files with path regex' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').treesitter, { desc = 'Find functions (treesitter)' })
