@@ -13,6 +13,23 @@ vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2a2a2a', blend = 20 })
 
 -- Buffer shortcuts
 vim.keymap.set('n', '<C-s>', ':w <CR>')
+vim.api.nvim_create_autocmd("BufWritePre", {
+ callback = function()
+   local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+   local has_formatter = false
+   
+   for _, client in ipairs(clients) do
+     if client.server_capabilities.documentFormattingProvider then
+       has_formatter = true
+       break
+     end
+   end
+   
+   if has_formatter then
+     vim.lsp.buf.format({ async = false })
+   end
+ end,
+})
 
 -- Buffer tab/close
 vim.keymap.set('n', '<leader>n', '<Cmd>bn!<CR>')
