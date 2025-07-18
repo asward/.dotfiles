@@ -12,8 +12,15 @@ return {
   config = function()
     local cmp = require("cmp")
     local luasnip = require("luasnip")
-
     cmp.setup({
+      window = {
+        completion = cmp.config.window.bordered({
+          border = 'rounded'
+        }),
+        documentation = cmp.config.window.bordered({
+          border = 'rounded'
+        }),
+      },
       snippet = {
         expand = function(args)
           luasnip.lsp_expand(args.body)
@@ -24,7 +31,7 @@ return {
         ["<C-f>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.abort(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
@@ -43,6 +50,13 @@ return {
             fallback()
           end
         end, { "i", "s" }),
+        --       ['<Esc>'] = cmp.mapping(function(fallback)
+        --         if cmp.visible() then
+        --           cmp.close()
+        --         else
+        --           fallback()
+        --         end
+        --       end, { "i", "s" }),
       }),
       sources = cmp.config.sources({
         { name = "nvim_lsp" },

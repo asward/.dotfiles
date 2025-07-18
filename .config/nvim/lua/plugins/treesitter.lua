@@ -1,17 +1,19 @@
-return { "nvim-treesitter/nvim-treesitter",
+return {
+  "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
-  dependencies = { "OXY2DEV/markview.nvim"},
+  dependencies = { "OXY2DEV/markview.nvim" },
   lazy = false,
   config = function()
     require("nvim-treesitter.configs").setup({
       ensure_installed = {
         "markdown",
-	"markdown_inline",
+        "markdown_inline",
         "python",
         "javascript",
         "typescript",
         "html",
         "css",
+        "lua",
         "json",
         "yaml",
         "bash",
@@ -21,10 +23,10 @@ return { "nvim-treesitter/nvim-treesitter",
         "go",
         "ruby",
         "vim",
-      }, 
+      },
       auto_install = true,
       highlight = { enable = true },
-      indent = { enable = true },
+      --      indent = { enable = true },
     })
   end,
 }
