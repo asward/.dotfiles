@@ -12,12 +12,8 @@ require('telescope').setup({
     buffers = {
       mappings = {
         n = {
-          ["x"] = function(prompt_bufnr)
-            local selection = action_state.get_selected_entry()
-            actions.close(prompt_bufnr)
-            vim.api.nvim_buf_delete(selection.bufnr, { force = false })
-          end,
-        }
+          ["x"] = actions.delete_buffer,
+				}
       }
     }
   },
