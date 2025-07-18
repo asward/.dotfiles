@@ -1,3 +1,5 @@
 [user]
 	email = asward@ucdavis.edu
 	name = Andrew Ward
+[pull]
+	rebase = false
