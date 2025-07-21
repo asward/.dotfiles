@@ -34,7 +34,7 @@ return {
         initial_mode = "normal",
         mappings = {
           i = {
-            ["q"] = require('telescope.actions').close,
+            --          ["q"] = require('telescope.actions').close,
           },
           n = {
             ["q"] = require('telescope.actions').close,

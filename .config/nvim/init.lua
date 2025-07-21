@@ -131,3 +131,8 @@ vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 vim.g.python3_host_prog = "/usr/local/bin/python"
 
 vim.opt.clipboard = "unnamedplus"
+
+local local_config = vim.secure.read(".nvim.lua")
+if local_config then
+  loadstring(local_config)()
+end
