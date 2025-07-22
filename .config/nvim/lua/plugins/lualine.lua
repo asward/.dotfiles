@@ -4,9 +4,7 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        -- your existing theme and options
         theme = 'gruvbox_dark',
-        -- ... other options
       },
       sections = {
         lualine_a = { 'mode' },
@@ -18,7 +16,6 @@ return {
         lualine_y = { 'progress' },
         lualine_z = { 'location' }
       },
-      -- ... rest of your config
     }
   end,
 }
