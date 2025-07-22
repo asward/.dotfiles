@@ -1,16 +1,34 @@
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('habamax')
 
+
+-- LSP
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  end,
+})
+
+-- PLUGINS
 require("config.lazy")
 
--- Hybrid line numbers
+-- WORKSPACE
+local project_config = vim.fn.getcwd() .. "/.nvimrc.lua"
+if vim.fn.filereadable(project_config) == 1 then
+  dofile(project_config)
+end
+
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg = 'white', bg = 'NONE' })
 vim.opt.number = true
 vim.opt.updatetime = 250
 vim.opt.relativenumber = true
 
--- No sign column - diagnostics will color the line numbers directly
-vim.opt.signcolumn = 'no'
+vim.opt.signcolumn = 'yes'
 vim.opt.list = true
 vim.opt.listchars = {
   eol = "↴",
@@ -20,7 +38,6 @@ vim.opt.listchars = {
   --  precedes = "❮",
 }
 
--- Base line number colors
 vim.api.nvim_set_hl(0, 'LineNr', { fg = '#6272a4' })                    -- Relative numbers
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ff79c6', bold = true }) -- Current line
 
@@ -67,15 +84,11 @@ vim.api.nvim_set_hl(0, 'DiagnosticUnderlineError', { undercurl = true, sp = '#ff
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineWarn', { undercurl = true, sp = '#ECBE7B' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineInfo', { undercurl = true, sp = '#51afef' })
 vim.api.nvim_set_hl(0, 'DiagnosticUnderlineHint', { undercurl = true, sp = '#98be65' })
--- -- Line Numbers
--- vim.opt.number = true
--- vim.opt.relativenumber = true
--- vim.opt.signcolumn = "number"
 --
 -- -- CursorLine
--- vim.opt.cursorline = true
--- vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2a2a2a', blend = 20 })
--- vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
+vim.opt.cursorline = true
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#2a2a2a', blend = 20 })
+vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
 
 -- Set global defaults for spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
@@ -91,7 +104,7 @@ vim.keymap.set('n', '<leader>bx', ':bd<CR>', { desc = 'Close buffer' })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
-    local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
     local has_formatter = false
 
     for _, client in ipairs(clients) do
@@ -124,15 +137,8 @@ vim.api.nvim_create_autocmd("CursorHold", {
   end
 })
 
--- Refactor/rename
-vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
 
 -- PYTHON
 vim.g.python3_host_prog = "/usr/local/bin/python"
 
 vim.opt.clipboard = "unnamedplus"
-
-local local_config = vim.secure.read(".nvim.lua")
-if local_config then
-  loadstring(local_config)()
-end
