@@ -6,21 +6,22 @@ return {
     "nvim-treesitter/nvim-treesitter",
   },
   opts = {
+    show_defaults = false,
     strategies = {
       cmd = {
-        adapter = "anthropic",
+        adapter = "copilot",
       },
       chat = {
-        adapter = "anthropic",
+        adapter = "copilot",
         opts = {
           completion_provider = "cmp",
         },
       },
       inline = {
-        adapter = "anthropic",
+        adapter = "copilot",
       },
       agent = {
-        adapter = "anthropic",
+        adapter = "copilot",
       },
     },
     display = {

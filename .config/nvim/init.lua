@@ -17,30 +17,30 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- PLUGINS
 require("config.lazy")
 
--- WORKSPACE
-local project_config = vim.fn.getcwd() .. "/.nvimrc.lua"
-if vim.fn.filereadable(project_config) == 1 then
-  dofile(project_config)
-end
-
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg = 'white', bg = 'NONE' })
 vim.opt.number = true
 vim.opt.updatetime = 250
 vim.opt.relativenumber = true
-
+vim.opt.wrap = false
 vim.opt.signcolumn = 'yes'
 vim.opt.list = true
 vim.opt.listchars = {
   eol = "↴",
-  --  tab = "│⋅",
+  tab = "\u{00B7} ",
   --  trail = "•",
   --  extends = "❯",
   --  precedes = "❮",
 }
+-- Enable fold column
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
 
 vim.api.nvim_set_hl(0, 'LineNr', { fg = '#6272a4' })                    -- Relative numbers
 vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#ff79c6', bold = true }) -- Current line
 
+-- Clear Highlights -- 
+vim.keymap.set('n', '<leader>h', ':noh <CR>')
 
 -- vim.api.nvim_set_hl(0, "@ilb.scope.char.1", { fg = "#d3869b" })
 -- vim.api.nvim_set_hl(0, "@ilb.scope.underline.1", { fg = "#d3869b", underline = true })
@@ -92,9 +92,9 @@ vim.api.nvim_set_hl(0, 'SignColumn', { bg = 'NONE' })
 
 -- Set global defaults for spaces
 vim.opt.expandtab = true -- Use spaces instead of tabs
-vim.opt.tabstop = 2      -- Tab width
-vim.opt.shiftwidth = 2   -- Indent width
-vim.opt.softtabstop = 2  -- Backspace removes full indent
+vim.opt.tabstop = 4      -- Tab width
+vim.opt.shiftwidth = 4   -- Indent width
+vim.opt.softtabstop = 4  -- Backspace removes full indent
 
 -- Buffer shortcuts
 vim.keymap.set('n', '<C-s>', ':w <CR>')
@@ -102,6 +102,7 @@ vim.keymap.set('n', '<leader><Tab>', ':bnext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<leader><S-Tab>', ':bprevious<CR>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bx', ':bd<CR>', { desc = 'Close buffer' })
 
+-- Format on Save
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     local clients = vim.lsp.get_clients({ bufnr = 0 })
@@ -142,3 +143,5 @@ vim.api.nvim_create_autocmd("CursorHold", {
 vim.g.python3_host_prog = "/usr/local/bin/python"
 
 vim.opt.clipboard = "unnamedplus"
+
+--require("workspace")
