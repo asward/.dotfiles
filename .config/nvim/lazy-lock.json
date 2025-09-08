@@ -38,8 +38,8 @@
   "rustaceanvim": { "branch": "master", "commit": "12504405821c05874d2d1f6b5ec919f9808e2c99" },
   "scholar.nvim": { "branch": "master", "commit": "10cc2b98244fadc180d6957ff9c7856f1004d82a" },
   "telescope-file-browser.nvim": { "branch": "master", "commit": "3610dc7dc91f06aa98b11dca5cc30dfa98626b7e" },
-  "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
+  "telescope.nvim": { "branch": "master", "commit": "b4da76be54691e854d3e0e02c36b0245f945c2c7" },
   "toggleterm.nvim": { "branch": "main", "commit": "50ea089fc548917cc3cc16b46a8211833b9e3c7c" },
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
-  "workspace-config.nvim": { "branch": "feat/autocommands", "commit": "3ddd1f3394e4245f006191617196096aaea3671a" }
+  "workspace-config.nvim": { "branch": "main", "commit": "200ba9b3d8eeae6ac3bd8a426b893038f01e45e8" }
 }
