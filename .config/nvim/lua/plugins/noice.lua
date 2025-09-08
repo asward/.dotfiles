@@ -13,12 +13,6 @@ return {
 	priority = 1000,
 	config = function()
 		require("noice").setup({
-			routes = {
-				{
-					view = "notify",
-					filter = { event = "msg_showmode" },
-				},
-			},
 			views = {
 				notify = {
 					replace = true,
