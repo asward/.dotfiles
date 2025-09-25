@@ -44,6 +44,11 @@ if [ -f "$HOME/.secrets/api.env" ]; then
     set -a; source $HOME/.secrets/api.env; set +a;
 fi
 
+# Random wallpaper on login
+if [[ -f ~/.script/random_file.sh ]]; then
+    ~/.script/random_file.sh ~/wallpapers/ -r ".*\.png$" -o current.png
+fi
+
 fpath=($HOME/.config/zsh $fpath)
 autoload -Uz prompt; prompt
 
