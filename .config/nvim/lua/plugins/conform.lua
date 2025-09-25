@@ -7,18 +7,37 @@ return {
 			timeout_ms = 500,
 		},
 		formatters_by_ft = {
+			-- Web development
 			javascript = { "prettier" },
-			javascriptreact = { "prettier" },
 			typescript = { "prettier" },
+			javascriptreact = { "prettier" },
 			typescriptreact = { "prettier" },
+			vue = { "prettier" },
+			css = { "prettier" },
+			scss = { "prettier" },
+			less = { "prettier" },
+			html = { "prettier" },
 			json = { "prettier" },
-			jsonc = { "jq" }, -- Example: Use jq for JSONC
+			jsonc = { "prettier" },
 			yaml = { "prettier" },
 			markdown = { "prettier" },
-			css = { "prettier" },
-			html = { "prettier" },
+			graphql = { "prettier" },
+
+			-- System languages
+			lua = { "stylua" },
+			python = { "isort", "black" },
 			rust = { "rustfmt" },
-			lua = { "stylua" }, -- Add other filetypes and their respective formatters
+			go = { "goimports", "gofmt" },
+			c = { "clang_format" },
+			cpp = { "clang_format" },
+
+			-- Shell/config
+			sh = { "shfmt" },
+			bash = { "shfmt" },
+			zsh = { "shfmt" },
+
+			-- Fallback
+			["_"] = { "trim_whitespace" },
 		},
 	},
 }

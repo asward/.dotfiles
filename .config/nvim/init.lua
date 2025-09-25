@@ -3,15 +3,15 @@ vim.cmd.colorscheme("habamax")
 
 -- LSP
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-vim.api.nvim_create_autocmd("LspAttach", {
-	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-	callback = function(ev)
-		local opts = { buffer = ev.buf }
-		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-	end,
-})
+-- vim.api.nvim_create_autocmd("LspAttach", {
+-- 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+-- 	callback = function(ev)
+-- 		local opts = { buffer = ev.buf }
+-- 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+-- 		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+-- 		vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+-- 	end,
+-- })
 
 -- PLUGINS
 require("config.lazy")
@@ -52,6 +52,12 @@ vim.api.nvim_set_hl(0, "DiagnosticLineNrWarn", { fg = "#ECBE7B", bold = true })
 vim.api.nvim_set_hl(0, "DiagnosticLineNrInfo", { fg = "#51afef", bold = true })
 vim.api.nvim_set_hl(0, "DiagnosticLineNrHint", { fg = "#98be65", bold = true })
 
+-- Virtual text colors (subtle)
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#E06C75" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#E6C07B" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { fg = "#61AFEF" })
+vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#888888" })
+
 -- Configure diagnostics to use line numbers for signs
 vim.diagnostic.config({
 	signs = {
@@ -82,7 +88,7 @@ vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "#ECBE7B" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "#51afef" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "#98be65" })
---
+
 -- -- CursorLine
 vim.opt.cursorline = true
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2a2a2a", blend = 20 })
