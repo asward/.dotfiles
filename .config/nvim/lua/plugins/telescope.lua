@@ -21,6 +21,9 @@ vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, { desc =
 vim.keymap.set("n", "<leader>fh", require("telescope.builtin").help_tags, { desc = "Telescope help tags" })
 vim.keymap.set("n", "<leader>fp", find_files_with_path_regex, { desc = "Find files with path regex" })
 vim.keymap.set("n", "<leader>fd", require("telescope.builtin").treesitter, { desc = "Find functions (treesitter)" })
+vim.keymap.set("n", "<leader>fr", function()
+	require("telescope.builtin").lsp_references({ jump_type = "never" })
+end, { desc = "Find references" })
 vim.keymap.set("n", "<leader>fl", log_viewer.log_file_picker, { desc = "Browse log files" })
 vim.keymap.set("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "Go to definition" })
 return {
