@@ -80,15 +80,21 @@ vim.diagnostic.config({
 		border = "rounded",
 		focusable = false,
 	},
-	virtual_text = true,
+	virtual_text = {
+		severity = { min = vim.diagnostic.severity.ERROR },
+	},
 	underline = true,
 })
+
+--vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff6c6b" })
+--vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = false, sp = "#ECBE7B" })
+--vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = false, sp = "#51afef" })
+--vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = false, sp = "#98be65" })
 
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { undercurl = true, sp = "#ff6c6b" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { undercurl = true, sp = "#ECBE7B" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineInfo", { undercurl = true, sp = "#51afef" })
 vim.api.nvim_set_hl(0, "DiagnosticUnderlineHint", { undercurl = true, sp = "#98be65" })
-
 -- -- CursorLine
 vim.opt.cursorline = true
 vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2a2a2a", blend = 20 })
@@ -137,6 +143,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 			prefix = " ",
 			scope = "cursor",
 		}
+
 		vim.diagnostic.open_float(nil, opts)
 	end,
 })
