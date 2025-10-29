@@ -1,3 +1,5 @@
+vim.lsp.handlers["textDocument/hover"] = require("noice.lsp").hover
+
 return {
 	"folke/noice.nvim",
 	dependencies = {
