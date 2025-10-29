@@ -13,11 +13,11 @@ return {
 	priority = 1000,
 	config = function()
 		require("noice").setup({
-			views = {
-				notify = {
-					replace = true,
-				},
-			},
+			--			views = {
+			--				notify = {
+			--					replace = true,
+			--				},
+			--			},
 			-- Add keymaps
 			keys = {
 				["<Esc>"] = {
