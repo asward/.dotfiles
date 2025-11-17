@@ -1,1 +1,0 @@
-return {'cmp-nvim-lsp'}
