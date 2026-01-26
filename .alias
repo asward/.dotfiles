@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
@@ -15,13 +15,19 @@ if [[ -n "$WSL_DISTRO_NAME" ]] || grep -qi microsoft /proc/version 2>/dev/null; 
     # Set clipboard aliases for WSL
     alias clip='powershell.exe "Get-Clipboard"'
     alias clipset='powershell.exe "Set-Clipboard"'
-    
+
     # Optional: Additional clipboard functions
     clipget() {
         powershell.exe "Get-Clipboard" "$@"
     }
-    
+
     clipput() {
         powershell.exe "Set-Clipboard" -Value "$(cat)"
     }
+fi
+
+
+if [ -f ~/src/espressif/esp-idf/export.sh ]; then
+    alias get_idf=". ~/src/espressif/esp-idf/export.sh"
+    alias idf="idf.py"
 fi
