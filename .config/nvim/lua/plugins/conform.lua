@@ -25,7 +25,7 @@ return {
 
 			-- System languages
 			lua = { "stylua" },
-			python = { "isort", "black" },
+			python = { "ruff" },
 			rust = { "rustfmt" },
 			go = { "goimports", "gofmt" },
 			c = { "clang_format" },

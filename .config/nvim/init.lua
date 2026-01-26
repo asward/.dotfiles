@@ -148,7 +148,4 @@ vim.api.nvim_create_autocmd("CursorHold", {
 	end,
 })
 
--- PYTHON
-vim.g.python3_host_prog = "/usr/local/bin/python"
-
 vim.opt.clipboard = "unnamedplus"
