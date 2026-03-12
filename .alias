@@ -31,3 +31,5 @@ if [ -f ~/src/espressif/esp-idf/export.sh ]; then
     alias get_idf=". ~/src/espressif/esp-idf/export.sh"
     alias idf="idf.py"
 fi
+alias compose='docker compose'
+alias dps='docker ps --format "{{.Names}}\n\tContainer ID: {{.ID}}\n\tCommand: {{.Command}}\n\tImage: {{.Image}}\n\tCreatedAt: {{.CreatedAt}}\n\tStatus: {{.Status}}"'

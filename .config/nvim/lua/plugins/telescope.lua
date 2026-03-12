@@ -45,6 +45,9 @@ return {
 				},
 			},
 			pickers = {
+				live_grep = {
+					initial_mode = "insert",
+				},
 				buffers = {
 					sort_mru = true,
 					show_all_buffers = true,
@@ -62,6 +65,7 @@ return {
 				lsp_definitions = {
 					show_line = false,
 					trim_text = true,
+					initial_mode = "normal",
 					theme = "dropdown", -- or "cursor" for centered
 				},
 			},

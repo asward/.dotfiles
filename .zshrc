@@ -56,6 +56,10 @@ LS_COLORS='no=00:fi=00:di=34:ow=34;40:ln=35:pi=30;44:so=35;44:do=35;44:bd=33;44:
 export LS_COLORS
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+if command -v gpg-connect-agent &>/dev/null; then
+    alias gpg-reload='gpg-connect-agent reloadagent /bye'
+fi
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -63,3 +67,10 @@ export NVM_DIR="$HOME/.nvm"
 
 alias get_idf=". ~/src/espressif/esp-idf/export.sh"
 alias idf="idf.py"
+
+# bun completions
+[ -s "/home/ward/.bun/_bun" ] && source "/home/ward/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
