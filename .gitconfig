@@ -3,3 +3,5 @@
 	name = Andrew Ward
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main
