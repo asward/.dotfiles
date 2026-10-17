@@ -3,6 +3,22 @@ vim.cmd.colorscheme("habamax")
 
 -- LSP
 vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
+
+vim.lsp.config("lua_ls", {
+	settings = {
+		Lua = {
+			runtime = { version = "LuaJIT" },
+			diagnostics = { globals = { "vim" } },
+			workspace = {
+				checkThirdParty = false,
+				library = { vim.env.VIMRUNTIME },
+			},
+			telemetry = { enable = false },
+		},
+	},
+})
+vim.lsp.enable("lua_ls")
+vim.lsp.enable({ "marksman", "markdown_oxide" })
 -- vim.api.nvim_create_autocmd("LspAttach", {
 -- 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 -- 	callback = function(ev)

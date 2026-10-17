@@ -1,0 +1,18 @@
+/* Battery widget styling */
+#battery {
+    font-family: "Nerd Font", monospace;
+    font-size: 16px;
+    padding: 0 8px;
+    color: white;
+}
+
+/* Only critical state gets red color */
+#battery.critical {
+    color: #bf616a;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.5; }
+}

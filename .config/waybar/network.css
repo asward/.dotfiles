@@ -1,0 +1,7 @@
+/* Waybar CSS - add to your style.css */
+
+#network {
+    font-family: "Nerd Font", monospace;
+    font-size: 16px;
+    padding: 0 8px;
+}

@@ -1,0 +1,93 @@
+* {
+  border: none;
+  border-radius: 0;
+  font-family: monospace;
+  font-size: 12px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+window#waybar {
+  background-color: #000000;
+  color: #ffffff;
+  transition-property: background-color;
+  transition-duration: 0.5s;
+  border-bottom: 1px solid #333333;
+}
+
+/* Workspaces (applies to both #numbered and #scratch) */
+#workspaces {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  min-width: 0;
+  background-color: transparent;
+  color: #666666;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#workspaces button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button.active {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+#workspaces button.urgent {
+  background-color: #eb4d4b;
+}
+
+/* Em dash between numbered workspaces and scratchpads */
+#custom-ws-sep {
+  padding: 0 2px;
+  color: #888888;
+}
+
+/* Scratchpads (M / P) */
+#workspaces.scratch button {
+  color: #888888;
+}
+
+#workspaces.scratch button.active {
+  background-color: #e5a50a;
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Window title */
+#window {
+  background: transparent;
+  padding: 0 12px;
+  color: #ffffff;
+  font-weight: normal;
+}
+
+/* Right modules */
+#cpu,
+#memory,
+#temperature,
+#clock,
+#battery,
+#custom-first-limit,
+#custom-audio,
+#network {
+  padding: 0 8px;
+  color: #ffffff;
+  background: transparent;
+}
+
+@keyframes blink {
+  to {
+    background-color: #ffffff;
+    color: #000000;
+  }
+}

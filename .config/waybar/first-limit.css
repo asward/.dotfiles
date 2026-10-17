@@ -1,0 +1,29 @@
+/* First limit indicator styling */
+#custom-first-limit {
+    font-family: monospace;
+    font-size: 16px;
+    padding: 0 8px;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Normal state - green */
+#custom-first-limit.normal {
+    color: #a3be8c;
+}
+
+/* Warning state - yellow */
+#custom-first-limit.warning {
+    color: #ebcb8b;
+}
+
+/* Critical state - red with blink */
+#custom-first-limit.critical {
+    color: #bf616a;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0.7; }
+}
