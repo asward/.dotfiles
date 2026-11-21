@@ -1,34 +1,17 @@
-vim.lsp.handlers["textDocument/hover"] = require("noice.lsp").hover
-
 return {
-	"folke/noice.nvim",
-	dependencies = {
-		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-		"MunifTanjim/nui.nvim",
-		-- OPTIONAL:
-		--   `nvim-notify` is only needed, if you want to use the notification view.
-		--   If not available, we use `mini` as the fallback
-		"rcarriga/nvim-notify",
-	},
-	-- event = "VeryLazy",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		require("noice").setup({
-			--			views = {
-			--				notify = {
-			--					replace = true,
-			--				},
-			--			},
-			-- Add keymaps
-			keys = {
-				["<Esc>"] = {
-					function()
-						require("noice").cmd("dismiss")
-					end,
-					desc = "Dismiss all notifications",
-				},
-			},
-		})
-	end,
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+        cmdline = { enabled = true, view = "cmdline_popup" },
+        popupmenu = { enabled = true }, -- completion menu under the floating cmdline
+        messages = { enabled = false }, -- native echo area / :messages
+        notify = { enabled = false }, -- leaves vim.notify to alerts
+        lsp = {
+            progress = { enabled = false },
+            hover = { enabled = false },
+            signature = { enabled = false },
+            message = { enabled = false },
+        },
+    },
 }
