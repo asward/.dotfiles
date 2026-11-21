@@ -6,16 +6,16 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("hypridle")
-    hl.exec_cmd("clipse -listen") -- clipboard listener
+    hl.exec_cmd("clipse -listen")                         -- clipboard listener
     hl.exec_cmd("waybar")
-    hl.exec_cmd("mako") -- notifications (config: ~/.config/mako/config)
+    hl.exec_cmd("mako")                                   -- notifications (config: ~/.config/mako/config)
     hl.exec_cmd("~/.config/hypr/scripts/scratchpad-glow.py") -- white edge glow while a scratchpad is open
 
     -- Scratchpad apps (routed to their special workspaces by rules.lua)
     hl.exec_cmd("bitwarden-desktop")
     hl.exec_cmd("discord")
     hl.exec_cmd("google-chrome-stable --profile-directory=Default --app-id=hpfldicfbfomlpcikngkocigghgafkph") -- Google Messages
-    hl.exec_cmd("google-chrome-stable --profile-directory=Default --app=https://mail.google.com/") -- Gmail
+    hl.exec_cmd("google-chrome-stable --profile-directory=Default --app=https://mail.google.com/")         -- Gmail
 end)
 
 require("./hyprland/monitors")
@@ -27,18 +27,22 @@ require("./hyprland/rules")
 -----------------
 
 -- Theming
-hl.env("GTK_THEME", "Adwaita:dark")
+-- hl.env("GTK_THEME", "Adwaita:dark")
 hl.env("XCURSOR_THEME", "capitaine-cursors")
 hl.env("XCURSOR_SIZE", "24")
-hl.env("QT_STYLE_OVERRIDE", "Adwaita-Dark")
-hl.env("QT_QPA_PLATFORMTHEME", "xdgdesktopportal")
+-- hl.env("QT_STYLE_OVERRIDE", "Adwaita-Dark")
+-- hl.env("QT_QPA_PLATFORMTHEME", "xdgdesktopportal")
 
 -- Session
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
-hl.env("QT_QPA_PLATFORM", "wayland")
-
+-- hl.env("QT_QPA_PLATFORM", "wayland")
+--
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto") -- Electron: VS Code, Discord, Obsidian, etc.
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("GDK_BACKEND", "wayland,x11")
+hl.env("SDL_VIDEODRIVER", "wayland")
 -----------------
 ---- AUTOSTART --
 -----------------

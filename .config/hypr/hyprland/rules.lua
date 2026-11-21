@@ -9,7 +9,33 @@ hl.window_rule({
     center = true,
     opacity = "1.0 override 1.0 override",
 })
-
+hl.window_rule({
+    name = "xwayland-popups-solid",
+    match = { xwayland = true },
+    no_dim = true,
+    opaque = true,
+})
+hl.window_rule({
+    name = "test-prusa",
+    match = { class = "PrusaSlicer" },
+    no_dim = true,
+})
+-- XWayland popups/flyouts: no title and/or no class
+hl.window_rule({
+    name = "no-dim-xwayland-popups",
+    match = { xwayland = true, float = true, title = "^$" },
+    no_dim = true,
+})
+hl.window_rule({
+    name = "no-dim-xwayland-floating",
+    match = { xwayland = true, float = true },
+    no_dim = true,
+})
+hl.window_rule({
+    name = "no-dim-classless",
+    match = { class = "^$", title = "^$" },
+    no_dim = true,
+})
 -- Apps that don't set the modal flag: catch common dialog titles.
 -- Add more with what `hyprctl clients` shows while the dialog is open.
 hl.window_rule({

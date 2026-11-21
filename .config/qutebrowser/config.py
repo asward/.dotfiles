@@ -3,6 +3,14 @@ config.load_autoconfig(False)
 c.downloads.location.suggestion = 'path'
 c.downloads.location.directory = '~/Downloads/'
 
+c.qt.environ = {'QTWEBENGINE_FORCE_USE_GBM': '1'}
+
+# c.input.mode_override = 'passthrough'
+
+# c.input.insert_mode.auto_load = True    # page loads with a focused input → insert mode
+# c.input.insert_mode.auto_enter = True   # clicking an input → insert mode (default)
+# c.input.insert_mode.auto_leave = True   # clicking off it → normal mode (default)
+
 c.colors.webpage.preferred_color_scheme = 'dark'
 
 c.url.default_page = "https://google.com/"
@@ -31,6 +39,13 @@ c.url.searchengines = {
     '!yt':      'https://www.youtube.com/results?search_query={}'
 }
 
+qp = 'spawn --userscript qute-pass --dmenu-invocation "wofi --dmenu"' 
+config.bind(',p',  qp)                       # fill username + password
+config.bind(',P',  qp + ' --password-only')
+config.bind(',u',  qp + ' --username-only')
+config.bind(',o',  qp + ' --otp-only')       # needs pass-otp
+config.bind('<Ctrl-Alt-p>', qp, mode='insert')
+config.bind('<Ctrl-Alt-p>', qp, mode='passthrough')  # if you went the passthrough route
 
 # Short aliases for open commands
 config.bind('o', 'cmd-set-text -s :open ')
@@ -39,7 +54,12 @@ config.bind('w', 'cmd-set-text -s :open -w ')
 config.bind('<Ctrl-Tab>', 'tab-next')
 config.bind('<Ctrl-Shift-Tab>', 'tab-prev')
 
-c.content.headers.user_agent = "Mozilla/5.0 ({os_info}; rv:135.0) Gecko/20100101 Firefox/135"
+config.set(
+    'content.headers.user_agent',
+    'Mozilla/5.0 ({os_info}) AppleWebKit/{webkit_version} (KHTML, like Gecko) '
+    '{upstream_browser_key}/{upstream_browser_version_short} Safari/{webkit_version}',
+    'https://accounts.google.com/*',
+)
 
 config.set('content.javascript.enabled', True, '*://*.digikey.com/*')
 config.set('content.javascript.enabled', True, 'https://www.digikey.com')

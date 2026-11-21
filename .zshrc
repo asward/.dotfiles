@@ -64,13 +64,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-
 alias get_idf=". ~/src/espressif/esp-idf/export.sh"
 alias idf="idf.py"
-
-# bun completions
-[ -s "/home/ward/.bun/_bun" ] && source "/home/ward/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
